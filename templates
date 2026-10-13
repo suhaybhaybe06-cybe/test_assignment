@@ -1,0 +1,162 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Appointment - Hospital Management System</title>
+
+    <link rel="stylesheet" href="{% static 'hospital/css/style.css' %}">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <div class="logo-icon">🏥</div>
+
+            <div>
+                <h2>Hospital</h2>
+                <span>Management System</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="{% url 'dashboard' %}" class="menu-item">
+                <span>🏠</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="{% url 'patient_list' %}" class="menu-item">
+                <span>👤</span>
+                <span>Patients</span>
+            </a>
+
+            <a href="{% url 'doctor_list' %}" class="menu-item">
+                <span>👨‍⚕️</span>
+                <span>Doctors</span>
+            </a>
+
+            <a href="{% url 'department_list' %}" class="menu-item">
+                <span>🏥</span>
+                <span>Departments</span>
+            </a>
+
+            <a href="{% url 'appointment_list' %}" class="menu-item active">
+                <span>📅</span>
+                <span>Appointments</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <span>⚙️</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- NAVBAR -->
+        <header class="top-navbar">
+
+            <div>
+                <h1>Add Appointment</h1>
+                <p>Create a new patient appointment</p>
+            </div>
+
+        </header>
+
+
+        <!-- FORM SECTION -->
+        <section class="form-section">
+
+            <div class="form-card">
+
+                <div class="form-header">
+                    <div>
+                        <h2>📅 New Appointment</h2>
+                        <p>Enter the appointment information below.</p>
+                    </div>
+                </div>
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                        <div class="form-errors">
+                            <strong>Please correct the errors below.</strong>
+                            {{ form.errors }}
+                        </div>
+                    {% endif %}
+
+
+                    <div class="form-grid">
+
+                        {% for field in form %}
+
+                            <div class="form-group">
+
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                </label>
+
+                                {{ field }}
+
+                                {% if field.help_text %}
+                                    <small>{{ field.help_text }}</small>
+                                {% endif %}
+
+                                {% for error in field.errors %}
+                                    <span class="field-error">
+                                        {{ error }}
+                                    </span>
+                                {% endfor %}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <a href="{% url 'appointment_list' %}"
+                           class="btn-secondary">
+                            ← Cancel
+                        </a>
+
+                        <button type="submit"
+                                class="btn-primary">
+                            💾 Save Appointment
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>
+
